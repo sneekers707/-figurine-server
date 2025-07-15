@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат генерации</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 40px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #00c3ff;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>✅ Генерация завершена!</h1>
+    <p>Вот ваша персонализированная фигурка:</p>
+    <img src="{{ image_url }}" alt="Generated Image">
+    <br>
+    <a href="{{ url_for('index') }}">← Назад</a>
+</body>
+</html>
+
