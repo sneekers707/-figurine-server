@@ -13,7 +13,7 @@ os.makedirs(app.config['GENERATED_FOLDER'], exist_ok=True)
 
 # Используем переменную окружения для API ключа
 openai_api_key = os.environ.get("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")
-client = OpenAI(api_key=openai_api_key)
+openai.api_key = os.getenv("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")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
