@@ -8,13 +8,11 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['GENERATED_FOLDER'] = 'static/generated'
 
-# Убедимся, что папки существуют
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['GENERATED_FOLDER'], exist_ok=True)
 
-# Вставь свой API-ключ сюда
-openai_api_key = "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"  # 🔑 замените на свой ключ
-
+# Используем переменную окружения для API ключа
+openai_api_key = os.environ.get("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")
 client = OpenAI(api_key=openai_api_key)
 
 @app.route("/", methods=["GET", "POST"])
@@ -41,9 +39,7 @@ def index():
                     n=1,
                     response_format="url"
                 )
-
             image_url = response.data[0].url
-
             return render_template("result.html", image_url=image_url)
 
         except Exception as e:
@@ -51,5 +47,7 @@ def index():
 
     return render_template("index.html")
 
-    port = int(os.environ.get("PORT", 5000))
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
