@@ -49,7 +49,7 @@ def index():
         try:
             # Отправляем запрос в OpenAI
             response = client.images.generate(
-                model="dall-e-3",
+                model="GPT-4o",
                 prompt=prompt,
                 size="1024x1792",
                 n=1,
