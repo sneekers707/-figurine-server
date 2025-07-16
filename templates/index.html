@@ -2,77 +2,64 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Создание арт-объекта</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <title>Создание фигурки</title>
     <style>
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: #1b0505;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #101010;
+            color: #f5f5f5;
             padding: 40px;
+            text-align: center;
         }
-        h1 {
-            color: #fff;
-            margin-bottom: 20px;
-        }
+
         form {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-            width: 100%;
-            max-width: 500px;
+            margin-top: 20px;
         }
-        input[type="file"], select, button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            margin-bottom: 20px;
+
+        input[type="text"], input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
             border: none;
-            border-radius: 10px;
+            width: 300px;
         }
-        button {
-            background-color: #fff;
-            color: #1b0505;
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #00c3ff;
+            border: none;
+            color: white;
             font-weight: bold;
+            border-radius: 6px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #e6e6e6;
+
+        input[type="submit"]:hover {
+            background-color: #009fd6;
+        }
+
+        h1 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Создай свою персонализированную фигурку</h1>
-    <form action="/generate" method="post" enctype="multipart/form-data">
-        <label>Загрузите фотографию:</label>
-        <input type="file" name="photo" required>
+    <h1>🧸 Генерация персонализированной фигурки</h1>
 
-        <label>Аксессуар 1:</label>
-        <select name="accessory1">
-            <option value="Очки">Очки</option>
-            <option value="Сумка">Сумка</option>
-            <option value="Кепка">Кепка</option>
-        </select>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <label>Загрузите фото:</label><br>
+        <input type="file" name="photo" accept="image/*" required><br>
 
-        <label>Аксессуар 2:</label>
-        <select name="accessory2">
-            <option value="Часы">Часы</option>
-            <option value="Пояс">Пояс</option>
-            <option value="Шарф">Шарф</option>
-        </select>
+        <label>Аксессуар 1:</label><br>
+        <input type="text" name="acc1" required><br>
 
-        <label>Аксессуар 3:</label>
-        <select name="accessory3">
-            <option value="Кроссовки">Кроссовки</option>
-            <option value="Браслет">Браслет</option>
-            <option value="Наушники">Наушники</option>
-        </select>
+        <label>Аксессуар 2:</label><br>
+        <input type="text" name="acc2" required><br>
 
-        <button type="submit">Готово</button>
+        <label>Аксессуар 3:</label><br>
+        <input type="text" name="acc3" required><br>
+
+        <input type="submit" value="Готово">
     </form>
 </body>
 </html>
