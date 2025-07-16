@@ -1,44 +1,61 @@
 import os
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 from openai import OpenAI
-from uuid import uuid4
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['GENERATED_FOLDER'] = 'static/generated'
 
+# Создаем папки, если их нет
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['GENERATED_FOLDER'], exist_ok=True)
 
-# Используем переменную окружения для API ключа
-openai_api_key = os.environ.get("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")
-openai.api_key = os.getenv("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")
+# API ключ OpenAI
+openai_api_key = os.getenv("OPENAI_API_KEY")  # не вставляй ключ прямо в код, используй переменные окружения
+client = OpenAI(api_key=openai_api_key)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        # Получаем файл и аксессуары
         photo = request.files["photo"]
-        acc1 = request.form["acc1"]
-        acc2 = request.form["acc2"]
-        acc3 = request.form["acc3"]
+        acc1 = request.form.get("acc1", "").strip()
+        acc2 = request.form.get("acc2", "").strip()
+        acc3 = request.form.get("acc3", "").strip()
 
+        # Сохраняем файл
         filename = secure_filename(photo.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         photo.save(filepath)
 
-        accessories_text = f"{acc1}, {acc2}, {acc3}"
-        prompt = f"Сгенерируй арт-фигурку по фотографии человека с аксессуарами: {accessories_text}"
+        # Подставляем аксессуары в промпт
+        prompt = f"""
+Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
+Стиль: максимально реалистичный, как для рекламы или сторис (соотношение 9:16).
+Основное:
+Это 3D-кукла в стиле Bratz, из soft touch пластика.
+Персонаж — в полный рост, повторяет внешность и аутфит с первого фото.
+Копируй каждую деталь: прическу, черты и пропорции лица, форму бороды, глаза, губы, одежду — с акцентом на стиль и текстуры.
+Кукла лежит в пластиковом углублении, повторяющем её силуэт.
+Упаковка:
+Современный стиль коробки.
+Прозрачный пластик спереди, картон сзади. Цвета — чёрный, белый, пастельные тона.
+Вверху коробки должно быть написано имя бренда (C.A.S.H.) — буквы напечатаны и выгравированы на коробке.
+Аксессуары внутри коробки:
+Разложены рядом с куклой по своим местам: {acc1}; {acc2}; {acc3};
+        """
 
         try:
-            with open(filepath, "rb") as img_file:
-                response = client.images.generate(
-                    model="dall-e-3",
-                    prompt=prompt,
-                    size="1024x1024",
-                    n=1,
-                    response_format="url"
-                )
+            # Отправляем запрос в OpenAI
+            response = client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                size="1024x1792",
+                n=1,
+                response_format="url"
+            )
+
             image_url = response.data[0].url
             return render_template("result.html", image_url=image_url)
 
@@ -47,7 +64,7 @@ def index():
 
     return render_template("index.html")
 
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
+
