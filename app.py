@@ -12,7 +12,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['GENERATED_FOLDER'], exist_ok=True)
 
 # Используем переменную окружения для API ключа
-openai_api_key = os.environ.get("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")
+openai_api_key = os.environ.get("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")
 client = OpenAI(api_key=openai_api_key)
 
 @app.route("/", methods=["GET", "POST"])
