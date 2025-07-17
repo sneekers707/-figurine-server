@@ -12,9 +12,9 @@ def index():
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    accessory1 = request.form.get("accessory1")
-    accessory2 = request.form.get("accessory2")
-    accessory3 = request.form.get("accessory3")
+    accessory1 = request.form.get("acc1")
+    accessory2 = request.form.get("acc2")
+    accessory3 = request.form.get("acc3")
 
     prompt = f"""Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
 Стиль: максимально реалистичный, как для рекламы или сторис (соотношение 9:16).
