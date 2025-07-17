@@ -10,7 +10,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/generate", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         accessory1 = request.form.get("acc1")
