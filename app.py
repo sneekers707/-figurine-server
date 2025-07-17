@@ -2,7 +2,6 @@ import os
 import openai
 from flask import Flask, request, render_template
 
-# Загружаем ключ из переменной окружения
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
@@ -33,7 +32,7 @@ def generate():
 
     try:
         response = openai.images.generate(
-            model="GPT-4o",
+            model="dall-e-3",
             prompt=prompt,
             n=1,
             size="1024x1792"
