@@ -5,46 +5,52 @@
     <title>Результат генерации</title>
     <style>
         body {
-            background-color: #101010;
-            color: #f5f5f5;
             font-family: Arial, sans-serif;
-            text-align: center;
+            background-color: #111;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 40px;
         }
         h1 {
-            margin-bottom: 30px;
+            color: #00c3ff;
         }
-        img {
+        .image-wrapper {
+            margin-top: 30px;
+        }
+        .image-wrapper img {
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 195, 255, 0.3);
         }
-        a.button {
-            display: inline-block;
+        .back-button {
             margin-top: 30px;
-            padding: 10px 20px;
+        }
+        .back-button a {
             background-color: #00c3ff;
-            color: white;
+            color: #fff;
+            padding: 10px 20px;
             text-decoration: none;
-            font-weight: bold;
             border-radius: 6px;
         }
-        a.button:hover {
+        .back-button a:hover {
             background-color: #009fd6;
         }
     </style>
 </head>
 <body>
-    <h1>🎉 Ваша персонализированная фигурка готова!</h1>
-    {% if image_url %}
-        <img src="{{ image_url }}" alt="Сгенерированное изображение">
-        <br>
-        <a class="button" href="/">Создать ещё</a>
-    {% else %}
-        <p>Не удалось получить изображение. Пожалуйста, попробуйте снова.</p>
-        <a class="button" href="/">Назад</a>
-    {% endif %}
+    <h1>Ваша уникальная фигурка готова!</h1>
+
+    <div class="image-wrapper">
+        <img src="{{ image_url }}" alt="Сгенерированная фигурка">
+    </div>
+
+    <div class="back-button">
+        <a href="/">Создать ещё</a>
+    </div>
 </body>
 </html>
 
