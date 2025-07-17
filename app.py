@@ -44,7 +44,7 @@ def index():
             try:
                 with open(filepath, "rb") as image_file:
                     response = openai.images.generate(
-                        model="dall-e-3",
+                        model="GPT-4o",
                         prompt=prompt,
                         size="1024x1792",
                         response_format="url",
