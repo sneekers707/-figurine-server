@@ -10,13 +10,14 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/generate", methods=["POST"])
-def generate():
-    accessory1 = request.form.get("acc1")
-    accessory2 = request.form.get("acc2")
-    accessory3 = request.form.get("acc3")
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        accessory1 = request.form.get("acc1")
+        accessory2 = request.form.get("acc2")
+        accessory3 = request.form.get("acc3")
 
-    prompt = f"""Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
+        prompt = f"""Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
 Стиль: максимально реалистичный, как для рекламы или сторис (соотношение 9:16).
 Основное:
 Это 3D-кукла в стиле Bratz, из soft touch пластика.
@@ -30,19 +31,20 @@ def generate():
 Аксессуары внутри коробки:
 Разложены рядом с куклой по своим местам: {accessory1}; {accessory2}; {accessory3};"""
 
-    try:
-        response = openai.images.generate(
-            model="dall-e-3",
-            prompt=prompt,
-            n=1,
-            size="1024x1792"
-        )
-        image_url = response.data[0].url
-        return render_template("result.html", image_url=image_url)
+        try:
+            response = openai.images.generate(
+                model="GPT-4o",
+                prompt=prompt,
+                n=1,
+                size="1024x1792"
+            )
+            image_url = response.data[0].url
+            return render_template("result.html", image_url=image_url)
+        except Exception as e:
+            return f"Ошибка генерации: {e}"
 
-    except Exception as e:
-        return f"Ошибка генерации: {e}"
-
+    # если GET — просто отрисовываем форму
+    return render_template("index.html")
 if __name__ == "__main__":
     app.run(debug=True)
 
