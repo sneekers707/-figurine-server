@@ -3,47 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Результат генерации</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #1b0505;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: #101010;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            text-align: center;
             padding: 40px;
         }
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         img {
             max-width: 100%;
-            border-radius: 20px;
+            height: auto;
+            border-radius: 12px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
         a.button {
             display: inline-block;
             margin-top: 30px;
-            padding: 12px 24px;
-            background-color: #fff;
-            color: #1b0505;
-            border-radius: 10px;
+            padding: 10px 20px;
+            background-color: #00c3ff;
+            color: white;
             text-decoration: none;
             font-weight: bold;
+            border-radius: 6px;
         }
         a.button:hover {
-            background-color: #e6e6e6;
+            background-color: #009fd6;
         }
     </style>
 </head>
 <body>
-    <h1>Ваша персонализированная фигурка готова!</h1>
+    <h1>🎉 Ваша персонализированная фигурка готова!</h1>
     {% if image_url %}
-        <img src="{{ image_url }}" alt="Результат">
+        <img src="{{ image_url }}" alt="Сгенерированное изображение">
+        <br>
+        <a class="button" href="/">Создать ещё</a>
     {% else %}
-        <p>Извините, произошла ошибка при генерации изображения.</p>
+        <p>Не удалось получить изображение. Пожалуйста, попробуйте снова.</p>
+        <a class="button" href="/">Назад</a>
     {% endif %}
-    <a href="/" class="button">Назад</a>
 </body>
 </html>
+
