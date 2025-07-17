@@ -46,20 +46,21 @@
 <body>
     <h1>🧸 Генерация персонализированной фигурки</h1>
 
-    <form action="/" method="post" enctype="multipart/form-data">
+    <form action="/generate" method="post" enctype="multipart/form-data">
         <label>Загрузите фото:</label><br>
         <input type="file" name="photo" accept="image/*" required><br>
 
         <label>Аксессуар 1:</label><br>
-        <input type="text" name="acc1" required><br>
+        <input type="text" name="accessory1" required><br>
 
         <label>Аксессуар 2:</label><br>
-        <input type="text" name="acc2" required><br>
+        <input type="text" name="accessory2" required><br>
 
         <label>Аксессуар 3:</label><br>
-        <input type="text" name="acc3" required><br>
+        <input type="text" name="accessory3" required><br>
 
         <input type="submit" value="Готово">
     </form>
 </body>
 </html>
+
