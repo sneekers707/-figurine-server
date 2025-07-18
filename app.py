@@ -49,7 +49,8 @@ def index():
                         size="1024x1792",
                         response_format="url",
                     )
-                    image_url = response.data[0].url
+# ВРЕМЕННАЯ ЗАГЛУШКА — удалишь после разблокировки
+                    image_url = "https://via.placeholder.com/512x912.png?text=Тестовая+фигурка"
                     return render_template("result.html", image_url=image_url)
 
             except Exception as e:
