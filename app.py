@@ -32,7 +32,7 @@ def generate():
 
     try:
         response = openai.images.generate(
-            model="dall-e-3",
+            model="gpt-4.1",
             prompt=prompt,
             n=1,
             size="1024x1792"
