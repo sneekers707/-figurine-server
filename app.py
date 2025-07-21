@@ -1,32 +1,23 @@
 import os
-from flask import Flask, request, render_template, redirect
-from werkzeug.utils import secure_filename
 import openai
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
 
-# Настройки Flask
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
-# API ключ OpenAI
+load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        photo = request.files.get("photo")
-        acc1 = request.form.get("acc1")
-        acc2 = request.form.get("acc2")
-        acc3 = request.form.get("acc3")
+app = Flask(__name__)
+CORS(app)  # разрешаем CORS, чтобы можно было делать запросы с HTML страницы
 
-        # Сохраняем фото во временную папку
-        if photo:
-            filename = secure_filename(photo.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            photo.save(filepath)
+@app.route("/generate", methods=["POST"])
+def generate():
+    accessory1 = request.form.get("accessory1", "")
+    accessory2 = request.form.get("accessory2", "")
+    accessory3 = request.form.get("accessory3", "")
+    accessory4 = request.form.get("accessory4", "")
 
-            prompt = f"""
-Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
+    prompt = f"""Создай коллекционную экшн-фигурку человека как дорогую игрушку в упаковке.
 Стиль: максимально реалистичный, как для рекламы или сторис (соотношение 9:16).
 Основное:
 Это 3D-кукла в стиле Bratz, из soft touch пластика.
@@ -36,31 +27,24 @@ def index():
 Упаковка:
 Современный стиль коробки.
 Прозрачный пластик спереди, картон сзади. Цвета — чёрный, белый, пастельные тона.
-Вверху коробки должно быть написано C.A.S.H.— буквы напечатаны и выгравированы на коробке.
-Аксессуары внутри коробки:
-Разложены рядом с куклой по своим местам: {acc1}, {acc2}, {acc3}.
-"""
+Вверху коробки написано C.A.S.H.
+Аксессуары: {accessory1}, {accessory2}, {accessory3}, {accessory4}."""
 
-            try:
-                with open(filepath, "rb") as image_file:
-                    response = openai.images.generate(
-                        model="dall-e-3",
-                        prompt=prompt,
-                        size="1024x1792",
-                        response_format="url",
-                    )
-                    image_url = response.data[0].url
-                    return render_template("result.html", image_url=image_url)
-
-    
-
-            except Exception as e:
-                return f"Ошибка при генерации: {str(e)}"
-
-    return render_template("index.html")
+    try:
+        response = openai.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            n=1,
+            size="1024x1792"
+        )
+        image_url = response.data[0].url
+        return jsonify({"image_url": image_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
