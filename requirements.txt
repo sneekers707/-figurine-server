@@ -1,5 +1,6 @@
 Flask
 openai
+flask-cors
 python-dotenv
 werkzeug
 gunicorn
