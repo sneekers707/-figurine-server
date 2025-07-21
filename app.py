@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import openai
 
 # Настройки Flask
-app = Flask(name)
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -59,5 +59,5 @@ def index():
 
     return render_template("index.html")
 
-if name == "main":
+if __name__ == "__main__":
     app.run(debug=True)
