@@ -1,81 +1,299 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Создание фигурки</title>
+  <title>Создание Арт-Объекта | C.A.S.H.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --gold: #FFD700;
+      --gold-light: #f0e68c;
+      --gold-dark: #c0b283;
+      --dark-bg: #050505;
+      --dark-text: #fff;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+      --glass-bg: rgba(20, 20, 20, 0.3);
+      --border: 2px solid var(--gold-dark);
+      --neon-glow: 0 0 15px var(--gold);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #ffffff;
-      text-align: center;
-      padding: 50px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Roboto', sans-serif;
+      color: var(--dark-text);
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://i.ibb.co/ShKfQxX/1000079451.png');
+      background-size: cover;
+      background-position: center;
+      user-select: none;
+      overflow-x: hidden;
+      padding-top: 6rem;
+      animation: fadeIn 0.5s ease-in-out forwards;
     }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 30px;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    form {
-      display: inline-block;
-      text-align: left;
-      background-color: #1f1f1f;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      max-width: 400px;
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: var(--border);
+    }
+
+    .back-btn {
+      font-family: 'Anton', sans-serif;
+      background: none;
+      border: var(--border);
+      color: var(--dark-text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .back-btn:hover {
+      color: var(--gold);
+      transform: scale(1.1);
+      box-shadow: var(--neon-glow);
+    }
+
+    .lang-cart {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lang-btn {
+      font-family: 'Anton', sans-serif;
+      border: var(--border);
+      background: transparent;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      color: var(--dark-text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .lang-btn.active,
+    .lang-btn:hover {
+      color: var(--dark-bg);
+      background: var(--gold);
+      transform: scale(1.1);
+      box-shadow: var(--neon-glow);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: var(--border);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-style: italic;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--gold);
+      text-shadow: var(--neon-glow);
+      letter-spacing: 1.5px;
     }
 
     label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
+      margin-bottom: 0.8rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     input[type="file"],
-    input[type="text"],
-    input[type="submit"] {
+    input[type="text"] {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
+      padding: 1rem;
+      border-radius: 10px;
+      border: var(--border);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--dark-text);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"]:hover,
+    input[type="text"]:hover {
+      border-color: var(--gold);
+      box-shadow: var(--neon-glow);
+    }
+
+    .submit-btn,
+    .action-btn {
+      width: 100%;
+      padding: 1.2rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+      background: var(--gold);
+      color: var(--dark-bg);
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    input[type="submit"] {
-      background-color: #00c3ff;
-      color: white;
-      font-weight: bold;
+      border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 1.5rem;
     }
 
-    input[type="submit"]:hover {
-      background-color: #0095c2;
+    .submit-btn:hover,
+    .action-btn:hover {
+      transform: scale(1.05);
+      box-shadow: var(--neon-glow);
+    }
+
+    .note,
+    .preview {
+      font-size: 1.1rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.6;
+      color: var(--gold-light);
+    }
+
+    .generated-image {
+      margin-top: 2rem;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      border: var(--border);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .generated-image:hover {
+      transform: scale(1.02);
+      box-shadow: var(--neon-glow);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 3rem 2rem;
+      background: var(--glass-bg);
+      border-top: var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    footer div {
+      flex: 1 1 200px;
+      min-width: 150px;
+    }
+
+    footer h4 {
+      font-family: 'Anton', sans-serif;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: var(--neon-glow);
+    }
+
+    footer a {
+      color: var(--dark-text);
+      text-decoration: none;
+      display: block;
+      margin: 0.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--gold);
+      transform: translateX(10px);
+      text-shadow: var(--neon-glow);
     }
   </style>
 </head>
 <body>
-  <h1>🧸 Генерация персонализированной фигурки</h1>
-  <form action="/" method="post" enctype="multipart/form-data">
-    <label for="photo">Загрузите фото:</label>
-    <input type="file" id="photo" name="photo" accept="image/*" required>
-
-    <label for="acc1">Аксессуар 1:</label>
-    <input type="text" id="acc1" name="acc1" placeholder="Например, очки" required>
-
-    <label for="acc2">Аксессуар 2:</label>
-    <input type="text" id="acc2" name="acc2" placeholder="Например, рюкзак" required>
-
-    <label for="acc3">Аксессуар 3:</label>
-    <input type="text" id="acc3" name="acc3" placeholder="Например, кроссовки" required>
-
-    <input type="submit" value="Готово">
-  </form>
+  <header>
+    <button class="back-btn" onclick="window.location.href='details.html'">← Назад</button>
+    <div class="lang-cart">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </header>
+  <div class="container">
+    <h2 id="title">Создайте свой арт-объект</h2>
+    <form id="generatorForm" action="/generate" method="POST" enctype="multipart/form-data">
+      <label for="photo">Фото (в полный рост):</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+      <label for="acc1">Аксессуар 1:</label>
+      <input type="text" id="acc1" name="acc1" placeholder="Например, очки" required>
+      <label for="acc2">Аксессуар 2:</label>
+      <input type="text" id="acc2" name="acc2" placeholder="Например, рюкзак" required>
+      <label for="acc3">Аксессуар 3:</label>
+      <input type="text" id="acc3" name="acc3" placeholder="Например, кроссовки" required>
+      <input type="submit" class="submit-btn" value="Готово">
+    </form>
+    {% if image_url %}
+    <div class="preview" id="previewSection">
+      <p>Вот как будет выглядеть ваш арт-объект:</p>
+      <img id="generatedImage" src="{{ image_url }}" alt="Генерация" class="generated-image">
+      <button class="action-btn" onclick="window.location.href='checkout.html'">Мне нравится</button>
+      <p class="note">Если вы хотите изменить фото или аксессуары, пожалуйста, вернитесь наверх и отредактируйте их в соответствующих полях.</p>
+    </div>
+    {% endif %}
+  </div>
+  <footer>
+    <div>
+      <p>© C.A.S.H., 2025. Все права защищены<br>Озерин В. / Тел -8 987 422 57 15 / ИНН 165506384111</p>
+    </div>
+    <div>
+      <h4>Контакты:</h4>
+      <a href="https://tiktok.com/@c.a.s.h_store">TikTok канал</a>
+      <a href="https://instagram.com/c.a.s.h.store">Instagram канал</a>
+      <a href="https://t.me/cash_store1">Telegram канал</a>
+    </div>
+    <div>
+      <h4>Доставка / оплата:</h4>
+      <a href="checkout.html">Доставка</a>
+      <a href="checkout.html">Оплата</a>
+    </div>
+  </footer>
 </body>
 </html>
-
