@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import openai
 
@@ -13,13 +13,14 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    image_url = None
+
     if request.method == "POST":
         photo = request.files.get("photo")
-        acc1 = request.form.get("acc1")
-        acc2 = request.form.get("acc2")
-        acc3 = request.form.get("acc3")
+        acc1 = request.form.get("acc1") or ""
+        acc2 = request.form.get("acc2") or ""
+        acc3 = request.form.get("acc3") or ""
 
-        # Сохраняем фото во временную папку
         if photo:
             filename = secure_filename(photo.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -40,24 +41,20 @@ def index():
 Аксессуары внутри коробки:
 Разложены рядом с куклой по своим местам: {acc1}, {acc2}, {acc3}.
 """
+            print("PROMPT ДЛЯ OPENAI:", prompt)
 
             try:
-                with open(filepath, "rb") as image_file:
-                    response = openai.images.generate(
-                        model="dall-e-3",
-                        prompt=prompt,
-                        size="1024x1792",
-                        response_format="url",
-                    )
-                    image_url = response.data[0].url
-                    return render_template("result.html", image_url=image_url)
-
-    
-
+                response = openai.Image.create(
+                    prompt=prompt,
+                    size="1024x1792",
+                    response_format="url",
+                    n=1
+                )
+                image_url = response["data"][0]["url"]
             except Exception as e:
                 return f"Ошибка при генерации: {str(e)}"
 
-    return render_template("index.html")
+    return render_template("index.html", image_url=image_url)
 
 if __name__ == "__main__":
     app.run(debug=True)
